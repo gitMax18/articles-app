@@ -32,7 +32,7 @@ const userSchema = mongoose.Schema({
   },
   likes : [{
       paper : {
-          type : mongoose.Schema.ObjectId,
+          type : mongoose.Schema.Types.ObjectId,
           ref : "Paper",
           required : true
       }

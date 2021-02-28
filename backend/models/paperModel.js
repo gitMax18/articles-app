@@ -10,7 +10,7 @@ const paperSchema = mongoose.Schema({
         required : [true, "veuillez entrer l'object de votre article"]
     },
     author : {
-        type : mongoose.Schema.ObjectId,
+        type : mongoose.Schema.Types.ObjectId,
         ref : "User",
         required : true
     },
@@ -29,7 +29,7 @@ const paperSchema = mongoose.Schema({
     },
     reviews : [{
         author : {
-            type : mongoose.Schema.ObjectId,
+            type : mongoose.Schema.Types.ObjectId,
             ref : "User",
             required : true,
         },
@@ -40,7 +40,7 @@ const paperSchema = mongoose.Schema({
     }],
     like : [{
         author : {
-            type : mongoose.Schema.ObjectId,
+            type : mongoose.Schema.Types.ObjectId,
             ref : "User",
             required : true,
         },
