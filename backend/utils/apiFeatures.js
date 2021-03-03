@@ -13,11 +13,12 @@ class ApiFeatures {
         }
       : {};
 
-    const category = this.queryStr.category
-      ? {
-          category: this.queryStr.category,
-        }
-      : null;
+    const category =
+      this.queryStr.category !== ""
+        ? {
+            category: this.queryStr.category,
+          }
+        : null;
 
     this.query = this.query.find({ ...title, ...category });
     return this;

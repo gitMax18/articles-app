@@ -1,0 +1,36 @@
+.userBtn {
+  position: relative;
+
+  &_infos {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 80%;
+    background-color: $tierce-color;
+    width: 25rem;
+    &-active {
+      display: block;
+    }
+    ul {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding-inline-start: 0%;
+
+      li {
+        width: 100%;
+      }
+    }
+  }
+  &_link {
+    display: block;
+    padding: 1rem;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    &:hover {
+      background-color: lightpink;
+    }
+  }
+}

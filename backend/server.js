@@ -6,13 +6,16 @@ const errorMiddleware = require("./middlewares/errorMiddleware.js");
 const userRoute = require("./routes/userRoutes.js");
 const paperRoute = require("./routes/paperRoutes.js")
 const cookieParser = require("cookie-parser");
+const cors = require("cors")
 
 const app = express();
 dotenv.config();
 
 // Middlewares
+app.use(cors())
 app.use(bodyParser.json());
 app.use(cookieParser());
+
 
 // Config Mongo_db
 mongoose.connect(process.env.MONGODB, {

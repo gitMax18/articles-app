@@ -1,0 +1,18 @@
+html {
+  font-size: 62.5%;
+}
+
+body,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: 0;
+}
+
+@import "./variables";
+@import "./layouts/loader";
+@import "./layouts/header";
+@import "./layouts/form";
+@import "./components/userBtn";
+@import "./pages//articles";

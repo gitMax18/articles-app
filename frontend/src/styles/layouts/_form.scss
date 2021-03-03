@@ -1,0 +1,46 @@
+.form {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: $primary-color;
+  width: 50rem;
+  border: 1px solid black;
+  margin-top: 4rem; //a enlever
+  border-radius: 20px;
+  &_title {
+    align-self: center;
+    color: $secondary-color;
+  }
+  &_fields {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+  &_label {
+    font-size: 2rem;
+    color: $secondary-color;
+    margin-bottom: 1rem;
+  }
+  &_input {
+    padding: 0.5rem;
+    font-size: 2rem;
+    &-wrong {
+      outline-color: red;
+    }
+    &-valid {
+      outline-color: green;
+    }
+  }
+  &_errorMessage {
+    color: $error-color;
+    font-size: 1.5rem;
+    height: 1rem;
+  }
+  &_btn {
+    display: block;
+    padding: 1rem;
+    width: 30rem;
+    margin: 2rem auto;
+  }
+}
