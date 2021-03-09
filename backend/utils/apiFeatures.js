@@ -20,7 +20,10 @@ class ApiFeatures {
           }
         : null;
 
-    this.query = this.query.find({ ...title, ...category });
+    this.query = this.query.find(
+      { ...title, ...category },
+      "title object author category createdAt like likeNb"
+    );
     return this;
   }
 

@@ -1,0 +1,25 @@
+.infos {
+  &_nb {
+    display: inline-block;
+    margin: 0 20rem;
+    width: 20rem;
+    height: 20rem;
+    background-color: $primary-color;
+    transform: rotate(45deg);
+    &_value {
+      font-size: $font-big-title;
+      color: $tierce-color;
+      transform: rotate(-45deg);
+      line-height: 20rem;
+      text-align: center;
+    }
+    &_txt {
+      position: absolute;
+      left: 110%;
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(-90deg);
+      font-size: 4rem;
+      font-weight: bold;
+    }
+  }
+}

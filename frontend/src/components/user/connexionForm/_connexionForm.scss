@@ -3,14 +3,13 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  background-color: $primary-color;
+  background-color: $tierce-color;
   width: 50rem;
-  border: 1px solid black;
-  margin-top: 4rem; //a enlever
-  border-radius: 20px;
   &_title {
+    color: $primary-color;
     align-self: center;
-    color: $secondary-color;
+    font-size: 4rem;
+    padding: 2rem;
   }
   &_fields {
     padding: 1rem;
@@ -19,12 +18,15 @@
   }
   &_label {
     font-size: 2rem;
-    color: $secondary-color;
-    margin-bottom: 1rem;
+    color: $primary-color;
+    margin-bottom: 0.7rem;
   }
   &_input {
-    padding: 0.5rem;
+    padding: 0.3rem;
     font-size: 2rem;
+    border: none;
+    border-bottom: 1px solid $primary-color;
+    outline: none;
     &-wrong {
       outline-color: red;
     }
@@ -36,11 +38,13 @@
     color: $error-color;
     font-size: 1.5rem;
     height: 1rem;
+    padding: 0.5rem;
   }
   &_btn {
-    display: block;
-    padding: 1rem;
-    width: 30rem;
-    margin: 2rem auto;
+    @include btn-primary($primary-color, $secondary-color, 20rem, 4rem);
+    margin: 2rem auto 4rem;
+  }
+  &_redirection {
+    font-size: 1.8rem;
   }
 }

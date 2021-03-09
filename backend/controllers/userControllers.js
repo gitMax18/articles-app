@@ -1,4 +1,5 @@
 const UserModel = require("../models/userModel.js");
+const PaperModel = require("../models/paperModel.js");
 const catchAsyncError = require("../utils/catchAsyncError.js");
 const HandleError = require("../utils/handleError.js");
 const sendCookieWithToken = require("../utils/sendCookieWithToken.js");
@@ -50,4 +51,66 @@ exports.logoutUser = catchAsyncError(async (req, res, next) => {
       success: true,
       message: "Vous êtes déconnecté",
     });
+});
+
+// get user
+
+exports.getUser = catchAsyncError(async (req, res, next) => {
+  if (req.user._id.toString() !== req.params.id.toString()) {
+    return next(new HandleError({ email: "Votre profil ID ne correspond pas..." }, 401));
+  }
+
+  const user = await UserModel.findById(req.params.id);
+
+  if (!user) {
+    return next(new HandleError({ email: "Utilisateur introuvable..." }, 400));
+  }
+
+  const papers = await PaperModel.find({ author: req.params.id }).populate({
+    path: "author",
+    select: "pseudo",
+  });
+
+  res.status(200).json({
+    success: true,
+    user,
+    papers,
+  });
+});
+
+//update user
+exports.updateUserProfil = catchAsyncError(async (req, res, next) => {
+  console.log(req.body);
+
+  const newData = { pseudo: req.body.pseudo, email: req.body.email };
+
+  const updatedUser = await UserModel.findByIdAndUpdate(req.user._id, newData, {
+    new: true,
+    runValidators: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    user: updatedUser,
+  });
+});
+
+// update password
+exports.updateUserPassword = catchAsyncError(async (req, res, next) => {
+  const user = await UserModel.findById(req.user._id).select("password");
+
+  const isValidPassword = await user.verifyPassword(req.body.password);
+
+  if (!isValidPassword) {
+    return next(new HandleError("Mot de passe incorrect"));
+  }
+
+  user.password = req.body.newPassword;
+
+  await user.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Votre mot de passe à bien été modifié",
+  });
 });

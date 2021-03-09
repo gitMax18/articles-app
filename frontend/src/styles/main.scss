@@ -1,18 +1,21 @@
-html {
-  font-size: 62.5%;
-}
-
-body,
-::after,
-::before {
-  margin: 0;
-  padding: 0;
-  box-sizing: 0;
-}
-
+@import "./config/reset";
+@import "./config/base";
 @import "./variables";
-@import "./layouts/loader";
-@import "./layouts/header";
-@import "./layouts/form";
-@import "./components/userBtn";
-@import "./pages//articles";
+@import "./components/buttons";
+@import "./components/wrapper";
+@import "../components/user/UserBtn/userBtn";
+@import "../components/layouts/Loader/loader";
+@import "../components/layouts/Header/header";
+@import "../components/user/connexionForm/connexionForm";
+@import "../components/pages/ArticlesPage/articlesPage";
+@import "../components/layouts/Pagination/pagination";
+@import "../components/articles/CreateArticle/createArticle";
+@import "../components/pages/HomePage/homePage";
+@import "../components/articles/BrefArticle/brefArticle";
+@import "../components/pages/ConnexionPage/connexionPage";
+@import "../components/pages/ProfilUserPage/profilUserPage";
+@import "../components/user/UpdateUserProfil/updateUserProfil";
+@import "../components/user/UserProfil/userProfil";
+@import "../components/articles/FullArticle/fullArticle";
+@import "../components/layouts/AppInfos/appInfos";
+@import "../components/pages/CreateArticlePage/createArticlePage";

@@ -1,0 +1,9 @@
+.connexion_page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - #{$height-header});
+  background: url("../images/connexion-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}

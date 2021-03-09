@@ -1,19 +1,24 @@
 .header {
+  position: fixed;
+  top: 0%;
   width: 100%;
   height: $height-header;
   background-color: $primary-color;
-  color: $secondary-color;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 1000;
+  color: $tierce-color;
   &_logo {
     font-size: $font-header-logo;
     margin-left: 12rem;
+    color: $tierce-color;
+
     a {
       display: block;
       cursor: pointer;
       text-decoration: none;
-      color: $secondary-color;
+      color: $tierce-color;
     }
   }
   &_nav {
@@ -29,8 +34,9 @@
       position: relative;
       text-decoration: none;
       display: block;
-      color: $secondary-color;
       padding: 1rem;
+      color: $tierce-color;
+
       &::after {
         content: "";
         position: absolute;
@@ -38,7 +44,7 @@
         left: 0;
         width: 100%;
         height: 2px;
-        background-color: $secondary-color;
+        background-color: $tierce-color;
         transform: scale(0);
         transition: all 0.3s ease-out;
       }

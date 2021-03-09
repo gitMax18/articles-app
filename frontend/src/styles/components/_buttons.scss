@@ -1,0 +1,15 @@
+@mixin btn-primary($color, $bg-color, $width, $height) {
+  display: inline-block;
+  text-decoration: none;
+  height: $height;
+  line-height: $height;
+  font-size: calc(#{$height} / 2);
+  background-color: $bg-color;
+  color: $color;
+  border-radius: 1000px;
+  width: $width;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  border: none;
+}

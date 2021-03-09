@@ -94,7 +94,10 @@ exports.getAllPapers = catchAsyncError(async (req, res, next) => {
 });
 
 exports.getPaper = catchAsyncError(async (req, res, next) => {
-  const paper = await PaperModel.findById(req.params.id);
+  const paper = await PaperModel.findById(req.params.id).populate({
+    path: "author",
+    select: "pseudo",
+  });
 
   if (!paper) {
     return next(new HandleError("Article introuvable...", 404));

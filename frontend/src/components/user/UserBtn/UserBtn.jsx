@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { logoutUser } from "../../redux/actions.js/connectUserAction";
+import { logoutUser } from "../../../redux/actions.js/authUserAction";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -9,7 +9,7 @@ const UserBtn = () => {
   const ref = useRef();
   const history = useHistory();
 
-  const { isAuthenticate } = useSelector((state) => state.user);
+  const { isAuthenticate } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   // peut etre a enlever

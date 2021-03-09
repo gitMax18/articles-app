@@ -1,5 +1,6 @@
 .userBtn {
   position: relative;
+  z-index: 1000;
 
   &_infos {
     display: none;

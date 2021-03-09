@@ -1,0 +1,25 @@
+.updateProfil {
+  max-width: 50rem;
+  &_field {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    font-size: 2.5rem;
+  }
+  &_label {
+    padding: 1rem 0;
+    color: $primary-color;
+  }
+  &_input {
+    border: none;
+    border-bottom: 1px solid $primary-color;
+    padding: 0.5rem;
+    outline: none;
+    font-size: 2rem;
+  }
+  &_btn {
+    @include btn-primary($primary-color, $secondary-color, 20rem, 3rem);
+    display: block;
+    margin: 2.5rem auto;
+  }
+}

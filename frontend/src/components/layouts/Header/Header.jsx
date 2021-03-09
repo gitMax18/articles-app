@@ -1,12 +1,10 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import UserBtn from "../layouts/UserBtn";
-import { useCheckLocalStorageUser } from "../../hooks";
+import UserBtn from "../../user/UserBtn/UserBtn";
+import { useCheckLocalStorageUser } from "../../../hooks";
 
 const Header = () => {
   const user = useCheckLocalStorageUser();
-
-  console.log(user);
 
   return (
     <header className="header">
@@ -51,16 +49,8 @@ const Header = () => {
                 <NavLink
                   className="header_nav_link"
                   activeClassName="header_nav_link-active"
-                  to="/inscription">
-                  Inscription
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  className="header_nav_link"
-                  activeClassName="header_nav_link-active"
-                  to="/connexion">
-                  Se connecter
+                  to="/connexion/se_connecter">
+                  Connexion
                 </NavLink>
               </li>
             </>

@@ -8,6 +8,7 @@ import {
   LOGOUT_USER_SUCCESS,
   LOGOUT_USER_FAIL,
   LOGOUT_USER_REQUEST,
+  RESET_AUTH_ERROR,
 } from "../types";
 import axios from "axios";
 
@@ -44,6 +45,8 @@ export const registerUser = (dataUser) => {
       dispatch(registerUserRequest());
 
       const { data } = await axios.post("http://localhost:5000/register", dataUser, {
+        withCredentials: true,
+        credentials: "includes",
         headers: {
           "Content-type": "application/json",
         },
@@ -84,6 +87,8 @@ export const loginUser = (dataUser) => {
       dispatch(loginUserRequest());
 
       const { data } = await axios.post("http://localhost:5000/login", dataUser, {
+        withCredentials: true,
+        credentials: "includes",
         headers: {
           "Content-type": "application/json",
         },
@@ -92,6 +97,7 @@ export const loginUser = (dataUser) => {
       dispatch(loginUserSuccess(data.user));
       setLocalStorageUser(data.user);
     } catch (error) {
+      console.log(error);
       dispatch(loginUserFail(error.response.data.message));
     }
   };
@@ -129,5 +135,11 @@ export const logoutUser = () => {
     } catch (error) {
       dispatch(logoutUserFail(error.response.data.message));
     }
+  };
+};
+
+export const resetAuthError = () => {
+  return {
+    type: RESET_AUTH_ERROR,
   };
 };

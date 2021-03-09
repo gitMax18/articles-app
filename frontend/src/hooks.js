@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 export const useCheckLocalStorageUser = () => {
   const [userState, setUserState] = useState(null);
-  const { user } = useSelector((state) => state.user);
+  const auth = useSelector((state) => state.auth);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -12,7 +12,7 @@ export const useCheckLocalStorageUser = () => {
     } else {
       setUserState(null);
     }
-  }, [user]);
+  }, [auth]);
 
   return userState;
 };

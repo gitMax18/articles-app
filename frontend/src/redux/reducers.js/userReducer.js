@@ -1,71 +1,68 @@
 import {
-  REGISTER_USER_REQUEST,
-  REGISTER_USER_SUCCESS,
-  REGISTER_USER_FAIL,
-  LOGIN_USER_SUCCESS,
-  LOGIN_USER_REQUEST,
-  LOGIN_USER_FAIL,
-  LOGOUT_USER_REQUEST,
-  LOGOUT_USER_SUCCESS,
-  LOGOUT_USER_FAIL,
+  PROFIL_USER_REQUEST,
+  PROFIL_USER_SUCCESS,
+  PROFIL_USER_FAIL,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAIL,
+  UPDATE_PASSWORD_REQUEST,
+  UPDATE_PASSWORD_SUCCESS,
+  UPDATE_PASSWORD_FAIL,
 } from "../types";
 
 const initialUserState = {
-  isLoading: false,
-  isAuthenticate: false,
-  user: null,
+  isLoading: true,
+  user: {},
   error: null,
+  papers: [],
+  isUpdated: false,
 };
 
-export const connectUserReducer = (state = initialUserState, action) => {
+export const getUserReducer = (state = initialUserState, action) => {
   switch (action.type) {
-    case REGISTER_USER_REQUEST:
-    case LOGIN_USER_REQUEST:
+    case PROFIL_USER_REQUEST:
+    case UPDATE_USER_REQUEST:
+    case UPDATE_PASSWORD_REQUEST:
       return {
         ...state,
         isLoading: true,
       };
 
-    case LOGOUT_USER_REQUEST:
+    case PROFIL_USER_SUCCESS:
       return {
         ...state,
-        isLoading: true,
-      };
-
-    case REGISTER_USER_SUCCESS:
-    case LOGIN_USER_SUCCESS:
-      return {
         isLoading: false,
-        isAuthenticate: true,
+        user: action.payload.user,
+        papers: action.payload.papers,
+        isUpdated: false,
+      };
+
+    case UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
         user: action.payload,
         error: null,
+        isUpdated: true,
       };
 
-    case LOGOUT_USER_SUCCESS:
+    case UPDATE_PASSWORD_SUCCESS:
       return {
         ...state,
         isLoading: false,
-        isAuthenticate: false,
-        user: null,
         error: null,
+        user: state.user,
+        isUpdated: true,
       };
 
-    case REGISTER_USER_FAIL:
-    case LOGIN_USER_FAIL:
-      return {
-        isLoading: false,
-        isAuthenticate: false,
-        user: null,
-        error: action.payload,
-      };
-
-    case LOGOUT_USER_FAIL:
+    case PROFIL_USER_FAIL:
+    case UPDATE_USER_FAIL:
+    case UPDATE_PASSWORD_FAIL:
       return {
         ...state,
         isLoading: false,
         error: action.payload,
       };
-
     default:
       return state;
   }
