@@ -1,0 +1,40 @@
+### create new paper
+POST http://localhost:5000/paper/new
+Content-Type: application/json
+
+{
+    "title" : "backes",
+    "object" : "pourquoi peut-on dire que manchester United est la meilleur équipe",
+    "content" : "ijfzeiofjzoifjzoifjzoifjofijzoifjiofjozifjoizejfoizejf ec zfiozefiocjfoifjefjeigj eogjegoieg coeg oeig eocgjoerg oergoeigjc oegoeigj coejgorieg oegjoejoirjgoie",
+    "category" : "sport"
+}
+
+
+### update paper
+PUT http://localhost:5000/paper/603a37f30b6ddcd5ad126737
+Content-Type: application/json
+
+{
+    "title" : " yahou MU les best",
+    "object" : "pourquoi peut-on dire que manchester United est la meilleur équipe",
+    "content" : "ijfzeiofjzoifjzoifjzoifjofijzoifjiofjozifjoizejfoizejf ec zfiozefiocjfoifjefjeigj eogjegoieg coeg oeig eocgjoerg oergoeigjc oegoeigj coejgorieg oegjoejoirjgoie",
+    "category" : "autres"
+}
+
+### delete article
+DELETE http://localhost:5000/paper/603a37f30b6ddcd5ad126737
+
+
+### get all articles
+GET http://localhost:5000/papers?title=&category=&limit=2&page=2
+
+
+### get one article
+GET http://localhost:5000/paper/603a1768cc6f07c36530cb46
+
+###get User papers
+GET http://localhost:5000/user/papers
+
+
+###get app infos
+GET http://localhost:5000/app/infos

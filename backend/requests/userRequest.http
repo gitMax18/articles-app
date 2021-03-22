@@ -1,0 +1,53 @@
+### Register user
+POST http://localhost:5000/register
+Content-Type: application/json
+
+{
+   "pseudo" : "",
+   "email" : "maxime.test.com",
+   "password": "azer"
+}
+
+
+### Login user
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+   "email" : "gooku2@test.com",
+   "password": "123456"
+}
+
+### Logout user
+GET http://localhost:5000/logout
+
+
+### create new paper
+DELETE http://localhost:5000/paper/603a37f30b6ddcd5ad126737
+
+
+### get user
+GET http://localhost:5000/user/603cb0777f9a74311a96dea7
+
+### update user
+PUT http://localhost:5000/user/update
+Content-Type: application/json
+
+{
+   "pseudo" : "Gooku2",
+   "email" : "gooku2@test.com"
+}
+
+
+### update password
+PUT http://localhost:5000/user/update/password
+Content-Type: application/json
+
+{
+   "password" : "azerty",
+   "newPassword" : "123456"
+}
+
+
+### delete User
+DELETE  http://localhost:5000/user/6039c92fda9896945d443201

@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn {
+    @apply inline-block px-6 py-2 font-bold rounded-full outline-none;
+  }
+
+  .btn:focus {
+    @apply outline-none;
+  }
+
+  .btn:hover {
+    @apply bg-opacity-80;
+  }
+
+  .input {
+    @apply w-full p-1 border-b outline-none;
+  }
+
+  .input:focus {
+    @apply border-indigo-900;
+  }
+
+  .label {
+    @apply block text-lg text-indigo-900;
+  }
+
+  .formError {
+    @apply pt-1 text-xs text-red-500;
+  }
+}
+
+/* Markdown */
+.markdown h1 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  padding: 0.6rem 0;
+}
+
+.markdown h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  padding: 0.3rem 0;
+}
+
+.markdown h3 {
+  font-size: 1.3rem;
+}
+
+.markdown ul,
+ol {
+  display: list-item;
+  margin-block-start: 0.1rem;
+  padding-left: 2rem;
+}
+
+.markdown li {
+  list-style-type: disc;
+}
+
+.markdown ol li {
+  list-style-type: decimal;
+}
+
+.markdown p {
+  padding: 0.5rem 0;
+}
+
+.markdown a {
+  color: blue;
+  border-bottom: 1px solid blue;
+}
+
+/* Pagination */
+
+.pagination {
+  justify-content: center;
+  display: flex;
+  margin-top: 4rem;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul.pagination li {
+  display: inline-block;
+  /* width: 30px; */
+  border: 1px solid #e2e2e2;
+  display: flex;
+  justify-content: center;
+  font-size: 25px;
+}
+
+ul.pagination li a {
+  text-decoration: none;
+  color: #337ab7;
+  font-size: 20px;
+  padding: 0 1rem;
+  display: block;
+}
+
+ul.pagination li.active a {
+  color: white;
+}
+ul.pagination li.active {
+  background-color: #337ab7;
+}
+
+ul.pagination li a:hover,
+ul.pagination li a.active {
+  color: blue;
+}
+
+.page-selection {
+  width: 48px;
+  height: 30px;
+  color: #337ab7;
+}
+
+.pagination-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
