@@ -5,13 +5,24 @@ import { RiDeleteBack2Fill } from "react-icons/ri";
 import { HiDocumentAdd } from "react-icons/hi";
 import Modal from "../layouts/Modal";
 import { transformDate } from "../../utils/transformDate";
+import LikeBtn from "../layouts/LikeBtn";
 
 const BrefArticle = ({ paper, user }) => {
   const [isShowModal, setIsShowModal] = useState(false);
 
   const history = useHistory();
 
-  const { author, category, createdAt, likeNb, object, title, _id } = paper;
+  const {
+    author,
+    category,
+    createdAt,
+    likesNb,
+    reviewsNb,
+    object,
+    title,
+    _id,
+    usersLike,
+  } = paper;
 
   const date = transformDate(createdAt);
 
@@ -35,7 +46,7 @@ const BrefArticle = ({ paper, user }) => {
     <>
       <div
         onClick={handleClick}
-        className="w-full p-2 my-2 transform rounded shadow-1 hover:shadow-2"
+        className="relative w-full p-2 my-2 transform rounded cursor-pointer shadow-1 hover:shadow-2"
       >
         <div className="text-gray-400 capitalize ">{category}</div>
         <h1 className="pt-1 pb-2 text-xl font-bold">{title}</h1>
@@ -46,7 +57,7 @@ const BrefArticle = ({ paper, user }) => {
           <div>{date}</div>
         </div>
         <div className="flex items-center justify-center pt-2 space-x-12">
-          {user && user.id === author._id && (
+          {user?.id === author._id && (
             <>
               <div className="z-10 text-3xl cursor-pointer" onClick={handleClickUpdate}>
                 <HiDocumentAdd className="text-blue-600" />
@@ -56,6 +67,9 @@ const BrefArticle = ({ paper, user }) => {
               </div>
             </>
           )}
+        </div>
+        <div className="absolute z-10 right-5 top-2">
+          <LikeBtn likesNb={likesNb} paperId={_id} usersLike={usersLike} />
         </div>
       </div>
       {isShowModal && (

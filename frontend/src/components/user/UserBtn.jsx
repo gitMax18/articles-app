@@ -13,8 +13,6 @@ const UserBtn = () => {
   const { isAuthenticate } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  console.log(isAuthenticate);
-
   useEffect(() => {
     return () => {
       toast.dark("Vous êtes déconnecté");

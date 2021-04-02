@@ -4,7 +4,6 @@ import RegisterForm from "../user/RegisterForm";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import toastConfig from "../../utils/toast_config";
 
 const ConnexionPage = () => {
   const params = useParams();

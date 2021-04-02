@@ -5,6 +5,7 @@ import BrefArticle from "../articles/BrefArticle";
 import Loader from "../layouts/Loader";
 import Pagination from "../layouts/Pagination";
 import { IoIosArrowBack } from "react-icons/io";
+import { resetLikeState } from "../../redux/actions.js/likeActions";
 
 const enumCategory = ["Environnement", "Société", "Politique", "Économie", "Autres"];
 
@@ -22,6 +23,7 @@ const ArticlesPage = () => {
   const { isValidated } = useSelector((state) => state.newPaper);
 
   const { user } = useSelector((state) => state.auth);
+  const { isUpdated } = useSelector((state) => state.like);
 
   const refShowCategory = useRef();
   const refCategory = useRef();
@@ -31,7 +33,10 @@ const ArticlesPage = () => {
     if (isValidated) {
       dispatch(resetNewPaperState());
     }
-  }, [dispatch, category, page, limit, isValidated]); // isVLIDATED CREER DEUX REQUET
+    if (isUpdated) {
+      dispatch(resetLikeState());
+    }
+  }, [dispatch, category, page, limit, isValidated, isUpdated]); // isValidated and isUpdated create two REQUEST
 
   const handleSubmit = (e) => {
     e.preventDefault();

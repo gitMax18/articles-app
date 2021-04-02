@@ -1,0 +1,6 @@
+POST http://localhost:5000/api/v1/papers/6057198b7cc8bb0d9077b7ea/likes
+
+
+
+###
+DELETE  http://localhost:5000/api/v1/papers/6057198b7cc8bb0d9077b7ea/likes/60630ad69872f75b490980ac

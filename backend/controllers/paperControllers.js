@@ -6,7 +6,7 @@ const ApiFeatures = require("../utils/apiFeatures.js");
 exports.newPaper = catchAsyncError(async (req, res, next) => {
   const { title, object, content, category } = req.body;
 
-  const newPaper = await PaperModel.create({
+  const paper = await PaperModel.create({
     title,
     object,
     content,
@@ -19,12 +19,13 @@ exports.newPaper = catchAsyncError(async (req, res, next) => {
   res.status(201).json({
     success: true,
     message: "Article créer",
+    paper,
   });
 });
 
 //arcticle/:id
 exports.updatePaper = catchAsyncError(async (req, res, next) => {
-  const paper = await PaperModel.findById(req.params.id);
+  let paper = await PaperModel.findById(req.params.id);
 
   if (!paper) {
     return next(new HandleError("article introuvable", 404));
@@ -36,7 +37,7 @@ exports.updatePaper = catchAsyncError(async (req, res, next) => {
     );
   }
 
-  await PaperModel.findByIdAndUpdate(req.params.id, req.body, {
+  paper = await PaperModel.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
   });
@@ -44,6 +45,7 @@ exports.updatePaper = catchAsyncError(async (req, res, next) => {
   res.status(200).json({
     success: true,
     message: "Votre article a bien été modifier",
+    paper,
   });
 });
 
@@ -69,7 +71,17 @@ exports.deletePaper = catchAsyncError(async (req, res, next) => {
 });
 
 // /papers?keyword=manchester&category=autres&limit=10&page=1
+// api/v1/papers
+// api/v1/user/:userId/papers
 exports.getAllPapers = catchAsyncError(async (req, res, next) => {
+  if (req.params.userId) {
+    const papers = await PaperModel.find({ author: req.params.userId });
+    res.status(200).json({
+      success: true,
+      papers,
+      totalResultCount: papers.length,
+    });
+  }
   const resPerPage = parseInt(req.query.limit) || 10;
 
   const apiFeatures = new ApiFeatures(PaperModel, req.query).search();
@@ -92,10 +104,15 @@ exports.getAllPapers = catchAsyncError(async (req, res, next) => {
 });
 
 exports.getPaper = catchAsyncError(async (req, res, next) => {
-  const paper = await PaperModel.findById(req.params.id).populate({
-    path: "author",
-    select: "pseudo",
-  });
+  const paper = await PaperModel.findById(req.params.id).populate([
+    {
+      path: "author",
+      select: "pseudo",
+    },
+    {
+      path: "reviews",
+    },
+  ]);
 
   if (!paper) {
     return next(new HandleError("Article introuvable...", 404));
@@ -107,11 +124,11 @@ exports.getPaper = catchAsyncError(async (req, res, next) => {
   });
 });
 
-exports.getUserPapers = catchAsyncError(async (req, res, next) => {
-  const papers = await PaperModel.find({ author: req.user._id });
+// exports.getUserPapers = catchAsyncError(async (req, res, next) => {
+//   const papers = await PaperModel.find({ author: req.user._id });
 
-  res.status(200).json({
-    success: true,
-    papers,
-  });
-});
+//   res.status(200).json({
+//     success: true,
+//     papers,
+//   });
+// });

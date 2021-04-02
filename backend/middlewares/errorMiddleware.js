@@ -3,8 +3,6 @@
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
 
-  console.log(err.name);
-
   if (err.code === 11000) {
     err.message = {
       [Object.keys(err.keyValue)]: `${Object.keys(err.keyValue)} : "${Object.values(
@@ -29,6 +27,5 @@ module.exports = (err, req, res, next) => {
     message: err.message,
     // stack : error.stack,
     // code : error.code,
-    err,
   });
 };

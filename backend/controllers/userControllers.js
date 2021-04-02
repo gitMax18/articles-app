@@ -3,6 +3,9 @@ const PaperModel = require("../models/paperModel.js");
 const catchAsyncError = require("../utils/catchAsyncError.js");
 const HandleError = require("../utils/handleError.js");
 const sendCookieWithToken = require("../utils/sendCookieWithToken.js");
+const sendEmail = require("../utils/sendEmail.js");
+const crypto = require("crypto");
+const { now } = require("mongoose");
 
 // /register
 exports.registerUser = catchAsyncError(async (req, res) => {
@@ -56,7 +59,7 @@ exports.logoutUser = catchAsyncError(async (req, res, next) => {
 // get user
 
 exports.getUser = catchAsyncError(async (req, res, next) => {
-  if (req.user._id.toString() !== req.params.id.toString()) {
+  if (req.user._id.toString() !== req.params.id) {
     return next(new HandleError({ email: "Votre profil ID ne correspond pas..." }, 401));
   }
 
@@ -133,4 +136,70 @@ exports.deleteUser = catchAsyncError(async (req, res, next) => {
     success: true,
     message: "Votre profil a été supprimer",
   });
+});
+
+//api/v1/user/forgotPassword
+exports.forgotPassword = catchAsyncError(async (req, res, next) => {
+  const user = await UserModel.findOne({ email: req.body.email });
+
+  if (!user) {
+    return next(new HandleError("Email introuvable", 404));
+  }
+
+  const resetToken = user.createResetToken();
+
+  await user.save();
+
+  const url = `${req.protocol}://${req.get(
+    "host"
+  )}/api/v1/user/resetPassword/${resetToken}`;
+
+  const emailMessage = `Bonjour, \n\n Veuillez cliquer sur le lien ci-dessous pour changer votre mot de passe. \n\n ${url}`;
+
+  const options = {
+    email: user.email,
+    text: emailMessage,
+    subject: "Changement mot de passe",
+  };
+
+  try {
+    await sendEmail(options);
+
+    res.status(200).json({
+      success: true,
+      message: "Un Email vous a été envoyé",
+    });
+  } catch (error) {
+    console.log(error);
+    user.resetPasswordToken = undefined;
+    user.resetPasswordTime = undefined;
+    await user.save();
+    return next(
+      new HandleError("Impossible d'envoyer un email, veuillez réesayer plus tard", 500)
+    );
+  }
+});
+
+// delete user
+
+exports.resetPassword = catchAsyncError(async (req, res, next) => {
+  const hashedToken = crypto.createHash("sha256").update(req.params.token).digest("hex");
+
+  const user = await UserModel.findOne({
+    resetPasswordToken: hashedToken,
+    resetPasswordTime: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    return next(
+      new HandleError("Non authorizé ou délai dépasser, veuillez réessayer", 401)
+    );
+  }
+  user.password = req.body.password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordTime = undefined;
+
+  await user.save();
+
+  sendCookieWithToken(user, 200, res, "Mot de passe modifié");
 });

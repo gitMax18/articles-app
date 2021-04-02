@@ -40,7 +40,7 @@ export const getUserProfil = (id) => {
     try {
       dispatch(getProfilUserRequest());
 
-      const { data } = await axios.get(`/user/${id}`);
+      const { data } = await axios.get(`/api/v1/user/${id}`);
 
       dispatch(getProfilUserSuccess(data));
     } catch (error) {
@@ -78,7 +78,7 @@ export const updateUserProfil = (dataUser) => {
     try {
       dispatch(updateProfilUserRequest());
 
-      const { data } = await axios.put(`/user/update`, dataUser, {
+      const { data } = await axios.put(`/api/v1/user/update/profil`, dataUser, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -119,7 +119,7 @@ export const updateUserPassword = (passwords) => {
     try {
       dispatch(updatePasswordUserRequest());
 
-      const { data } = await axios.put(`/user/update/password`, passwords, {
+      const { data } = await axios.put(`/api/v1/user/update/password`, passwords, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -160,7 +160,7 @@ export const deleteUser = (id) => {
     try {
       dispatch(deleteUserRequest());
 
-      const { data } = await axios.delete(`/user/${id}`);
+      const { data } = await axios.delete(`/api/v1/user/${id}`);
 
       dispatch(deleteUserSuccess(data));
     } catch (error) {

@@ -1,0 +1,19 @@
+###add reviews
+POST http://localhost:5000/api/v1/papers/6057198b7cc8bb0d9077b7ea/reviews
+Content-Type: application/json
+
+{
+     "commentary" : "kjzzszszsszsndjedned" 
+}
+
+### delete review
+DELETE  http://localhost:5000/api/v1/reviews/6062cd12d5cdd9419570e1c4
+
+
+### update review
+PUT  http://localhost:5000/api/v1/reviews/6062c7af4ad9833ece96341d
+Content-Type: application/json
+
+{
+    "commentary" : "comment updated"
+}

@@ -46,7 +46,7 @@ export const registerUser = (dataUser) => {
     try {
       dispatch(registerUserRequest());
 
-      const { data } = await axios.post("http://localhost:5000/register", dataUser, {
+      const { data } = await axios.post("/api/v1/user/register", dataUser, {
         withCredentials: true,
         credentials: "includes",
         headers: {
@@ -88,7 +88,7 @@ export const loginUser = (dataUser) => {
     try {
       dispatch(loginUserRequest());
 
-      const { data } = await axios.post("http://localhost:5000/login", dataUser, {
+      const { data } = await axios.post("/api/v1/user/login", dataUser, {
         withCredentials: true,
         credentials: "includes",
         headers: {
@@ -131,7 +131,7 @@ export const logoutUser = () => {
     try {
       dispatch(logoutUserRequest());
 
-      const { data } = await axios.get("/logout");
+      const { data } = await axios.get("/api/v1/user/logout");
       localStorage.removeItem("user");
 
       dispatch(logoutUserSuccess(data));

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../layouts/Loader";
 import FullArticle from "../articles/FullArticle";
+import CommentarySpace from "../articles/CommentarySpace";
 
 const ArticlePage = () => {
   const { id } = useParams();
@@ -21,8 +22,9 @@ const ArticlePage = () => {
       <Loader />
     </div>
   ) : (
-    <div className="articlePage">
+    <div>
       <FullArticle paper={paper} />
+      <CommentarySpace />
     </div>
   );
 };

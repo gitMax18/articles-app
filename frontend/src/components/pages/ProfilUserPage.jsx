@@ -8,6 +8,7 @@ import UpdateUserPassword from "../user/UpdateUserPassword";
 import { IoMdClose } from "react-icons/io";
 import { toast } from "react-toastify";
 import Loader from "../layouts/Loader";
+import { resetLikeState } from "../../redux/actions.js/likeActions";
 
 const ProfilUserPage = () => {
   const [isOnUpdate, setIsOnUpdate] = useState(false);
@@ -18,12 +19,17 @@ const ProfilUserPage = () => {
   const { user } = useSelector((state) => state.auth);
 
   const { isValidated } = useSelector((state) => state.newPaper);
+  const { isUpdated: isLikeUpdated } = useSelector((state) => state.like);
 
   useEffect(() => {
     if (user) {
       dispatch(getUserProfil(user.id));
     }
-  }, [dispatch, user, isValidated]);
+    if (isLikeUpdated) {
+      dispatch(getUserProfil(user.id));
+      dispatch(resetLikeState());
+    }
+  }, [dispatch, user, isValidated, isLikeUpdated]); // a revoir
 
   useEffect(() => {
     if (isUpdated) {

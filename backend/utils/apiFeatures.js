@@ -1,6 +1,7 @@
 class ApiFeatures {
   constructor(query, queryStr) {
-    (this.query = query), (this.queryStr = queryStr);
+    this.query = query;
+    this.queryStr = queryStr;
   }
 
   search() {
@@ -22,7 +23,7 @@ class ApiFeatures {
 
     this.query = this.query.find(
       { ...title, ...category },
-      "title object author category createdAt like likeNb"
+      "title object author category createdAt likesNb reviewsNb, usersLike"
     );
     return this;
   }

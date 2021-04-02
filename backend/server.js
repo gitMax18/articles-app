@@ -6,8 +6,12 @@ const errorMiddleware = require("./middlewares/errorMiddleware.js");
 const userRoute = require("./routes/userRoutes.js");
 const paperRoute = require("./routes/paperRoutes.js");
 const appRoute = require("./routes/appRoutes.js");
+const reviewRoute = require("./routes/reviewRoutes.js");
+const likeRoute = require("./routes/reviewRoutes");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const morgan = require("morgan");
+const helmet = require("helmet");
 
 const app = express();
 dotenv.config();
@@ -18,6 +22,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // app.use(express.json());
 app.use(cookieParser());
+app.use(helmet());
+app.use(morgan("dev"));
 
 // Config Mongo_db
 mongoose.connect(process.env.MONGODB, {
@@ -34,14 +40,21 @@ db.once("open", function () {
 });
 
 // Routes
-app.use(userRoute);
-app.use(paperRoute);
-app.use(appRoute);
+app.use("/api/v1/user", userRoute);
+app.use("/api/v1/papers", paperRoute);
+app.use("/api/v1/app", appRoute);
+app.use("/api/v1/likes", likeRoute);
+app.use("/api/v1/reviews", reviewRoute);
 
 // Error middleware
 app.use(errorMiddleware);
 
 // Server listener
-app.listen(process.env.PORT, () => {
+const server = app.listen(process.env.PORT, () => {
   console.log(`server is listening on PORT ${process.env.PORT}`);
 });
+
+// process.on("unhandledRejection", (err) => {
+//   console.log(`uncaughtException : ${err.message}`);
+//   server.close(() => process.exit(1));
+// });

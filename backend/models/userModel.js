@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 const JWT = require("jsonwebtoken");
+const crypto = require("crypto");
 
 const userSchema = mongoose.Schema({
   pseudo: {
@@ -30,31 +31,45 @@ const userSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  likes : [{
-      paper : {
-          type : mongoose.Schema.Types.ObjectId,
-          ref : "Paper",
-          required : true
-      }
-  }]
+  likes: [
+    {
+      paper: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Paper",
+        required: true,
+      },
+    },
+  ],
+  resetPasswordToken: String,
+  resetPasswordTime: Date,
 });
 
 userSchema.pre("save", async function (next) {
-  if(!this.isModified("password")){
-    return next()
+  if (!this.isModified("password")) {
+    return next();
   }
   this.password = await bcrypt.hash(this.password, 10);
 });
 
-userSchema.methods.verifyPassword = async function(password){
-    return await bcrypt.compare(password, this.password)
-}
+userSchema.methods.verifyPassword = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
 
 userSchema.methods.createToken = function () {
-  const token = JWT.sign({ id : this._id }, process.env.JWT_SECRET, {
+  const token = JWT.sign({ id: this._id }, process.env.JWT_SECRET, {
     expiresIn: "3d",
   });
-  return token
+  return token;
+};
+
+userSchema.methods.createResetToken = function () {
+  const token = crypto.randomBytes(16).toString("hex");
+
+  this.resetPasswordToken = crypto.createHash("sha256").update(token).digest("hex");
+
+  this.resetPasswordTime = Date.now() + 10 * 60 * 1000;
+
+  return token;
 };
 
 module.exports = mongoose.model("User", userSchema);

@@ -49,7 +49,7 @@ export const getAllPapers = (querySearch) => {
       dispatch(getAllPapersRequest());
 
       const { data } = await axios.get(
-        `/papers?title=${querySearch.title}&category=${querySearch.category}&limit=${querySearch.limit}&page=${querySearch.page}`
+        `/api/v1/papers?title=${querySearch.title}&category=${querySearch.category}&limit=${querySearch.limit}&page=${querySearch.page}`
       );
 
       dispatch(getAllPaperSuccess(data));
@@ -92,7 +92,7 @@ export const getOnePapers = (id) => {
     try {
       dispatch(getOnePapersRequest());
 
-      const { data } = await axios.get(`/paper/${id}`);
+      const { data } = await axios.get(`/api/v1/papers/${id}`);
 
       dispatch(getOnePaperSuccess(data));
     } catch (error) {
@@ -138,7 +138,7 @@ export const createNewPaper = (dataPaper) => {
     try {
       dispatch(createPaperRequest());
 
-      const { data } = await axios.post("/paper/new", dataPaper, {
+      const { data } = await axios.post("/api/v1/papers", dataPaper, {
         headers: { "Content-Type": "application/json" },
       });
 
@@ -180,7 +180,7 @@ export const updatePaper = (dataPaper, id) => {
     try {
       dispatch(updatePaperRequest());
 
-      const { data } = await axios.put(`/paper/${id}`, dataPaper, {
+      const { data } = await axios.put(`/api/v1/papers/${id}`, dataPaper, {
         headers: { "Content-Type": "application/json" },
       });
 
@@ -222,7 +222,7 @@ export const deletePaper = (id) => {
     try {
       dispatch(deletePaperRequest());
 
-      const { data } = await axios.delete(`/paper/${id}`);
+      const { data } = await axios.delete(`/api/v1/papers/${id}`);
 
       dispatch(deletePaperSuccess(data));
     } catch (error) {

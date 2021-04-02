@@ -30,7 +30,7 @@ export const getAppInfos = () => {
     try {
       dispatch(getAppInfosRequest());
 
-      const { data } = await axios.get("/app/infos");
+      const { data } = await axios.get("/api/v1/app");
 
       dispatch(getAppInfosSuccess(data));
     } catch (error) {

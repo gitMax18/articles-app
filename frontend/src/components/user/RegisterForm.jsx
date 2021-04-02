@@ -5,6 +5,7 @@ import { registerUser } from "../../redux/actions.js/authUserAction";
 import { Link } from "react-router-dom";
 import { resetAuthError } from "../../redux/actions.js/authUserAction";
 import Loader from "../layouts/Loader";
+import { useIsSamePasswords } from "../../utils/hooks";
 
 const RegisterForm = () => {
   const [credentials, setCredentials] = useState({
@@ -14,14 +15,14 @@ const RegisterForm = () => {
     confirmPassword: "",
   });
 
-  const [notSamePwdError, setNotSamePwdError] = useState("");
-
   const history = useHistory();
   const dispatch = useDispatch();
 
   const { isLoading, isAuthenticate, error } = useSelector((state) => state.auth);
 
   const { pseudo, email, password, confirmPassword } = credentials;
+
+  const { isSamePassword, checkPassword, passwordError } = useIsSamePasswords();
 
   useEffect(() => {
     if (isAuthenticate) {
@@ -35,8 +36,6 @@ const RegisterForm = () => {
 
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
-
-    // check if is the same password
   };
 
   const handleSubmit = (e) => {
@@ -48,10 +47,10 @@ const RegisterForm = () => {
       password,
     };
 
-    if (confirmPassword === password) {
+    checkPassword(password, confirmPassword);
+
+    if (isSamePassword) {
       dispatch(registerUser(dataUser));
-    } else {
-      setNotSamePwdError("Mot de passe non identique");
     }
   };
 
@@ -120,7 +119,7 @@ const RegisterForm = () => {
           value={confirmPassword}
           onChange={handleChange}
         />
-        <p className="formError">{notSamePwdError}</p>
+        <p className="formError">{passwordError}</p>
       </div>
 
       <button

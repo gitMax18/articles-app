@@ -3,6 +3,6 @@ const { getAppInfos } = require("../controllers/appcontrollers.js");
 
 const router = express.Router();
 
-router.get("/app/infos", getAppInfos);
+router.get("/", getAppInfos);
 
 module.exports = router;

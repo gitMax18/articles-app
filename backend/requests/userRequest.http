@@ -1,20 +1,20 @@
 ### Register user
-POST http://localhost:5000/register
+POST http://localhost:5000/api/v1/user/register
 Content-Type: application/json
 
 {
-   "pseudo" : "",
-   "email" : "maxime.test.com",
-   "password": "azer"
+   "pseudo" : "maxime",
+   "email" : "maxime@test.com",
+   "password": "azerty"
 }
 
 
 ### Login user
-POST http://localhost:5000/login
+POST http://localhost:5000/api/v1/user/login
 Content-Type: application/json
 
 {
-   "email" : "gooku2@test.com",
+   "email" : "maxime@test.com",
    "password": "123456"
 }
 
@@ -51,3 +51,20 @@ Content-Type: application/json
 
 ### delete User
 DELETE  http://localhost:5000/user/6039c92fda9896945d443201
+
+
+### forgot password
+POST http://localhost:5000/api/v1/user/forgotPassword
+Content-Type: application/json
+
+{
+   "email" : "maxime@test.com"
+}
+
+###
+POST http://localhost:5000/api/v1/user/resetPassword/e799428ebeab47012cf905c1dc99af12
+Content-Type: application/json
+
+{
+   "password" : "123456"
+}

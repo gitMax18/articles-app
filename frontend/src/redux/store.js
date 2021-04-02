@@ -9,6 +9,7 @@ import {
 } from "./reducers.js/paperReducer";
 import { getUserReducer } from "./reducers.js/userReducer.js";
 import { appInfosReducer } from "./reducers.js/appReducer";
+import likeReducer from "./reducers.js/likeReducer";
 
 const rootReducer = combineReducers({
   auth: authUserReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   user: getUserReducer,
   newPaper: managePaperReducer,
   app: appInfosReducer,
+  like: likeReducer,
 });
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
