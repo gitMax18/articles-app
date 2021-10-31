@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../redux/actions.js/authUserAction";
+import { loginUser, resetAuthError } from "../../redux/actions.js/authUserAction";
 import { Link } from "react-router-dom";
 import Loader from "../layouts/Loader";
 
@@ -22,7 +22,10 @@ const LoginForm = () => {
     if (isAuthenticate) {
       history.replace("/");
     }
-  }, [isAuthenticate, history]);
+    return () => {
+      dispatch(resetAuthError());
+    };
+  }, [isAuthenticate, history, dispatch]);
 
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -91,11 +94,15 @@ const LoginForm = () => {
           <Loader />
         </div>
       )}
-
-      <div className="text-sm">
-        Pas encore de compte ? <br />
-        <Link to="/connexion/inscription" className="text-indigo-900">
-          Créer un compte
+      <div className="flex justify-between text-sm">
+        <div className="">
+          Pas encore de compte ? <br />
+          <Link to="/connexion/inscription" className="text-indigo-900">
+            Créer un compte
+          </Link>
+        </div>
+        <Link to="/connexion/forgotPassword" className="text-indigo-900">
+          Mot de passe oublié ?
         </Link>
       </div>
     </form>

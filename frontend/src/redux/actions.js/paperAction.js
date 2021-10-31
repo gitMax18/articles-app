@@ -54,7 +54,7 @@ export const getAllPapers = (querySearch) => {
 
       dispatch(getAllPaperSuccess(data));
     } catch (error) {
-      dispatch(getAllPapersFail(error.response.data.message));
+      dispatch(getAllPapersFail(error));
     }
   };
 };
@@ -223,8 +223,7 @@ export const deletePaper = (id) => {
       dispatch(deletePaperRequest());
 
       const { data } = await axios.delete(`/api/v1/papers/${id}`);
-
-      dispatch(deletePaperSuccess(data));
+      dispatch(deletePaperSuccess({ ...data, id }));
     } catch (error) {
       if (error.response) {
         dispatch(deletePaperFail(error.response.data.message));

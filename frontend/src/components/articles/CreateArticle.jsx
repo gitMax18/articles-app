@@ -2,7 +2,7 @@ import marked from "marked";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { resetNewPaperState } from "../../redux/actions.js/paperAction";
+import { resetPaperState } from "../../redux/actions.js/paperAction";
 import Loader from "../layouts/Loader";
 
 import { toast } from "react-toastify";
@@ -14,20 +14,18 @@ const CreateArticle = ({ handleSubmit, initialPaperValue, pageTitle }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const { isValidated, error, message, isLoading } = useSelector(
-    (state) => state.newPaper
-  );
+  const { isUpdated, error, message, isLoading } = useSelector((state) => state.papers);
 
   useEffect(() => {
-    if (isValidated) {
+    if (isUpdated) {
       console.log(message);
       toast.dark(message);
       history.goBack();
     }
     return () => {
-      dispatch(resetNewPaperState());
+      dispatch(resetPaperState());
     };
-  }, [isValidated, history, dispatch]);
+  }, [isUpdated, history, dispatch]);
 
   const handleChange = (e) => {
     setDataPaper({ ...dataPaper, [e.target.name]: e.target.value });

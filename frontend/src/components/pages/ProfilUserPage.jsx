@@ -18,18 +18,16 @@ const ProfilUserPage = () => {
 
   const { user } = useSelector((state) => state.auth);
 
-  const { isValidated } = useSelector((state) => state.newPaper);
-  const { isUpdated: isLikeUpdated } = useSelector((state) => state.like);
+  const { usersLike } = useSelector((state) => state.papers);
+
+  // const { isUpdated } = useSelector((state) => state.Papers);
+  // const { isUpdated: isLikeUpdated } = useSelector((state) => state.like);
 
   useEffect(() => {
     if (user) {
       dispatch(getUserProfil(user.id));
     }
-    if (isLikeUpdated) {
-      dispatch(getUserProfil(user.id));
-      dispatch(resetLikeState());
-    }
-  }, [dispatch, user, isValidated, isLikeUpdated]); // a revoir
+  }, [dispatch, user?.id]); // a revoir
 
   useEffect(() => {
     if (isUpdated) {
@@ -74,7 +72,12 @@ const ProfilUserPage = () => {
               Vos articles :
             </h1>
             {papers.map((paper) => (
-              <BrefArticle paper={paper} key={paper._id} user={user} />
+              <BrefArticle
+                paper={paper}
+                usersLike={usersLike}
+                key={paper._id}
+                user={user}
+              />
             ))}
           </div>
         </div>

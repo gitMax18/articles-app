@@ -16,9 +16,9 @@ const rootReducer = combineReducers({
   papers: getPapersReducer,
   paper: getPaperReducer,
   user: getUserReducer,
-  newPaper: managePaperReducer,
+  // newPaper: managePaperReducer,
   app: appInfosReducer,
-  like: likeReducer,
+  // like: likeReducer,
 });
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));

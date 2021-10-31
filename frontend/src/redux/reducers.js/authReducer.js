@@ -10,6 +10,12 @@ import {
   LOGOUT_USER_FAIL,
   RESET_AUTH_ERROR,
   CHECK_USER_SUCCESS,
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAIL,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAIL,
   CHECK_USER_NONE,
 } from "../types";
 
@@ -26,6 +32,8 @@ export const authUserReducer = (state = initialUserState, action) => {
     case REGISTER_USER_REQUEST:
     case LOGIN_USER_REQUEST:
     case LOGOUT_USER_REQUEST:
+    case FORGOT_PASSWORD_REQUEST:
+    case RESET_PASSWORD_REQUEST:
       return {
         ...state,
         isLoading: true,
@@ -56,6 +64,16 @@ export const authUserReducer = (state = initialUserState, action) => {
         user: null,
       };
 
+    case FORGOT_PASSWORD_SUCCESS:
+    case RESET_PASSWORD_SUCCESS:
+      return {
+        isLoading: false,
+        isAuthenticate: false,
+        user: null,
+        error: null,
+        message: action.payload.message,
+      };
+
     case LOGOUT_USER_SUCCESS:
       return {
         ...state,
@@ -77,6 +95,8 @@ export const authUserReducer = (state = initialUserState, action) => {
       };
 
     case LOGOUT_USER_FAIL:
+    case FORGOT_PASSWORD_FAIL:
+    case RESET_PASSWORD_FAIL:
       return {
         ...state,
         isLoading: false,
@@ -87,6 +107,7 @@ export const authUserReducer = (state = initialUserState, action) => {
       return {
         ...state,
         error: null,
+        message: "",
       };
 
     default:

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { FaUserAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { logoutUser } from "../../redux/actions.js/authUserAction";
+import { logoutUser, resetAuthError } from "../../redux/actions.js/authUserAction";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -17,8 +17,9 @@ const UserBtn = () => {
     return () => {
       toast.dark("Vous êtes déconnecté");
       history.push("/");
+      dispatch(resetAuthError());
     };
-  }, [isAuthenticate, history]);
+  }, [isAuthenticate, history, dispatch]);
 
   const handleClickLogo = () => {
     ref.current.classList.toggle("hidden");

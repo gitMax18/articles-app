@@ -69,7 +69,12 @@ const BrefArticle = ({ paper, user }) => {
           )}
         </div>
         <div className="absolute z-10 right-5 top-2">
-          <LikeBtn likesNb={likesNb} paperId={_id} usersLike={usersLike} />
+          <LikeBtn
+            likesNb={likesNb}
+            paperId={_id}
+            author={author}
+            usersLike={usersLike}
+          />
         </div>
       </div>
       {isShowModal && (

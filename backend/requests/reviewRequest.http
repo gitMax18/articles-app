@@ -11,7 +11,7 @@ DELETE  http://localhost:5000/api/v1/reviews/6062cd12d5cdd9419570e1c4
 
 
 ### update review
-PUT  http://localhost:5000/api/v1/reviews/6062c7af4ad9833ece96341d
+PUT  http://localhost:5000/api/v1/reviews/6069b17ff8fbe50f673df3a5/reviews
 Content-Type: application/json
 
 {

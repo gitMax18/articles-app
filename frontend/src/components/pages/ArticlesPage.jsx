@@ -6,6 +6,7 @@ import Loader from "../layouts/Loader";
 import Pagination from "../layouts/Pagination";
 import { IoIosArrowBack } from "react-icons/io";
 import { resetLikeState } from "../../redux/actions.js/likeActions";
+import { ImSearch } from "react-icons/im";
 
 const enumCategory = ["Environnement", "Société", "Politique", "Économie", "Autres"];
 
@@ -20,23 +21,15 @@ const ArticlesPage = () => {
   const { isLoading, papers, resPerPage, totalResultCount, error } = useSelector(
     (state) => state.papers
   );
-  const { isValidated } = useSelector((state) => state.newPaper);
 
   const { user } = useSelector((state) => state.auth);
-  const { isUpdated } = useSelector((state) => state.like);
 
   const refShowCategory = useRef();
   const refCategory = useRef();
 
   useEffect(() => {
     dispatch(getAllPapers({ title: search, category, page, limit }));
-    if (isValidated) {
-      dispatch(resetNewPaperState());
-    }
-    if (isUpdated) {
-      dispatch(resetLikeState());
-    }
-  }, [dispatch, category, page, limit, isValidated, isUpdated]); // isValidated and isUpdated create two REQUEST
+  }, [dispatch, category, page, limit]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -58,15 +51,16 @@ const ArticlesPage = () => {
     refShowCategory.current.classList.toggle("rotate-180");
   };
 
-  const displayArticles = isLoading ? (
-    <div className="flex justify-center w-full my-32">
-      <Loader />
-    </div>
-  ) : papers.length < 1 ? (
-    <h1>Aucun article disponible...</h1>
-  ) : (
-    papers.map((paper) => <BrefArticle paper={paper} key={paper._id} user={user} />)
-  );
+  const displayArticles =
+    isLoading && isLoading ? (
+      <div className="flex justify-center w-full my-32">
+        <Loader />
+      </div>
+    ) : papers.length < 1 ? (
+      <h1>Aucun article disponible...</h1>
+    ) : (
+      papers.map((paper) => <BrefArticle paper={paper} key={paper._id} user={user} />)
+    );
 
   return (
     <div className="relative">
@@ -75,14 +69,17 @@ const ArticlesPage = () => {
           onSubmit={handleSubmit}
           className="flex flex-col items-center justify-center py-6 text-xl"
         >
-          <input
-            className="max-w-2xl input"
-            type="text"
-            id="search"
-            value={search}
-            placeholder="Entrer un titre d'article"
-            onChange={(e) => setSearch(e.target.value)}
-          />
+          <div className="flex items-center justify-center w-full">
+            <ImSearch className="mr-2 text-gray-600" />
+            <input
+              className="max-w-2xl input"
+              type="text"
+              id="search"
+              value={search}
+              placeholder="Entrer un titre d'article"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
           <button className="block mt-4 text-base text-white bg-green-500 btn w-max">
             Rechercher
           </button>

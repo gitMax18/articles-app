@@ -21,9 +21,8 @@ const ReviewSchema = mongoose.Schema({
 });
 
 ReviewSchema.statics.getReviewsNb = async function (paperId) {
-  const reviewsNb = await this.find({ paper: paperId }).countDocuments();
-
   try {
+    const reviewsNb = await this.find({ paper: paperId }).countDocuments();
     await this.model("Paper").findByIdAndUpdate(paperId, {
       reviewsNb,
     });

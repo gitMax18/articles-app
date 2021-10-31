@@ -1,16 +1,19 @@
 import React from "react";
 import { AiFillLike } from "react-icons/ai";
 import { useLike } from "../../utils/hooks";
+import { useSelector } from "react-redux";
 
-let LikeBtn = ({ likesNb, paperId, usersLike }) => {
-  const { isLiked, handleChangeLike } = useLike(usersLike, paperId);
+const LikeBtn = ({ likesNb, paperId, usersLike, author }) => {
+  const { isLiked, handleChangeLike } = useLike(usersLike, paperId, author);
 
-  let className = isLiked ? "text-2xl text-indigo-500" : "text-2xl text-indigo-200";
+  const { user } = useSelector((state) => state.auth);
+
+  const className = isLiked ? "text-2xl text-indigo-500" : "text-2xl text-indigo-200";
 
   return (
     <div
       className="flex items-center justify-center w-10 h-10 transform rounded-full hover:scale-110 hover:bg-indigo-50"
-      onClick={handleChangeLike}
+      onClick={(e) => handleChangeLike(e)}
     >
       <div className="relative">
         <AiFillLike className={className} />
@@ -22,4 +25,4 @@ let LikeBtn = ({ likesNb, paperId, usersLike }) => {
   );
 };
 
-export default LikeBtn = React.memo(LikeBtn);
+export default LikeBtn;

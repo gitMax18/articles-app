@@ -8,6 +8,12 @@ import {
   LOGOUT_USER_SUCCESS,
   LOGOUT_USER_FAIL,
   LOGOUT_USER_REQUEST,
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAIL,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAIL,
   RESET_AUTH_ERROR,
   CHECK_USER_SUCCESS,
   CHECK_USER_NONE,
@@ -89,8 +95,6 @@ export const loginUser = (dataUser) => {
       dispatch(loginUserRequest());
 
       const { data } = await axios.post("/api/v1/user/login", dataUser, {
-        withCredentials: true,
-        credentials: "includes",
         headers: {
           "Content-type": "application/json",
         },
@@ -141,9 +145,102 @@ export const logoutUser = () => {
   };
 };
 
+//forgotPassword
+const forgotPasswordRequest = () => {
+  return {
+    type: FORGOT_PASSWORD_REQUEST,
+  };
+};
+
+const forgotPasswordSuccess = (data) => {
+  return {
+    type: FORGOT_PASSWORD_SUCCESS,
+    payload: data,
+  };
+};
+
+const forgotPasswordFail = (error) => {
+  return {
+    type: FORGOT_PASSWORD_FAIL,
+    payload: error,
+  };
+};
+
+export const forgotPassword = (email) => {
+  return async (dispatch) => {
+    try {
+      dispatch(forgotPasswordRequest());
+
+      const { data } = await axios.post(
+        "/api/v1/user/forgotPassword",
+        { email },
+        {
+          headers: {
+            "Content-type": "application/json",
+          },
+        }
+      );
+
+      dispatch(forgotPasswordSuccess(data));
+    } catch (error) {
+      if (error.response) {
+        dispatch(forgotPasswordFail(error.response.data.message));
+      } else {
+        console.log(error);
+      }
+    }
+  };
+};
+
+//resetPassword
+const resetPasswordRequest = () => {
+  return {
+    type: RESET_PASSWORD_REQUEST,
+  };
+};
+
+const resetPasswordSuccess = (data) => {
+  return {
+    type: RESET_PASSWORD_SUCCESS,
+    payload: data,
+  };
+};
+
+const resetPasswordFail = (error) => {
+  return {
+    type: RESET_PASSWORD_FAIL,
+    payload: error,
+  };
+};
+
+export const resetPassword = (token, password) => {
+  return async (dispatch) => {
+    try {
+      dispatch(resetPasswordRequest());
+
+      const { data } = await axios.post(
+        `/api/v1/user/resetPassword/${token}`,
+        { password },
+        {
+          headers: {
+            "Content-type": "application/json",
+          },
+        }
+      );
+
+      dispatch(resetPasswordSuccess(data));
+    } catch (error) {
+      if (error.response) {
+        dispatch(resetPasswordFail(error.response.data.message));
+      } else {
+        console.log(error);
+      }
+    }
+  };
+};
+
 export const checkUser = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log(user);
 
   if (user && user.expireTime > Date.now()) {
     return {

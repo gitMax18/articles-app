@@ -5,7 +5,6 @@ const HandleError = require("../utils/handleError.js");
 const sendCookieWithToken = require("../utils/sendCookieWithToken.js");
 const sendEmail = require("../utils/sendEmail.js");
 const crypto = require("crypto");
-const { now } = require("mongoose");
 
 // /register
 exports.registerUser = catchAsyncError(async (req, res) => {
@@ -152,7 +151,7 @@ exports.forgotPassword = catchAsyncError(async (req, res, next) => {
 
   const url = `${req.protocol}://${req.get(
     "host"
-  )}/api/v1/user/resetPassword/${resetToken}`;
+  )}/connexion/resetPassword/${resetToken}`;
 
   const emailMessage = `Bonjour, \n\n Veuillez cliquer sur le lien ci-dessous pour changer votre mot de passe. \n\n ${url}`;
 
@@ -170,7 +169,6 @@ exports.forgotPassword = catchAsyncError(async (req, res, next) => {
       message: "Un Email vous a été envoyé",
     });
   } catch (error) {
-    console.log(error);
     user.resetPasswordToken = undefined;
     user.resetPasswordTime = undefined;
     await user.save();
@@ -180,7 +178,7 @@ exports.forgotPassword = catchAsyncError(async (req, res, next) => {
   }
 });
 
-// delete user
+// reset Password
 
 exports.resetPassword = catchAsyncError(async (req, res, next) => {
   const hashedToken = crypto.createHash("sha256").update(req.params.token).digest("hex");
@@ -199,7 +197,7 @@ exports.resetPassword = catchAsyncError(async (req, res, next) => {
   user.resetPasswordToken = undefined;
   user.resetPasswordTime = undefined;
 
-  await user.save();
+  await user.save({ validateModifiedOnly: true });
 
   sendCookieWithToken(user, 200, res, "Mot de passe modifié");
 });

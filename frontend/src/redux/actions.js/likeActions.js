@@ -1,42 +1,83 @@
 import {
-  MANAGE_LIKE_REQUEST,
-  MANAGE_LIKE_SUCCESS,
-  MANAGE_LIKE_FAIL,
+  ADD_LIKE_REQUEST,
+  ADD_LIKE_SUCCESS,
+  ADD_LIKE_FAIL,
+  REMOVE_LIKE_FAIL,
+  REMOVE_LIKE_REQUEST,
+  REMOVE_LIKE_SUCCESS,
   RESET_LIKE_STATE,
 } from "../types";
 
 import axios from "axios";
 
-const manageLikeRequest = () => {
+const addLikeRequest = () => {
   return {
-    type: MANAGE_LIKE_REQUEST,
+    type: ADD_LIKE_REQUEST,
   };
 };
 
-const manageLikeSuccess = () => {
+const addLikeSuccess = (data) => {
   return {
-    type: MANAGE_LIKE_SUCCESS,
+    type: ADD_LIKE_SUCCESS,
+    payload: data,
   };
 };
 
-const manageLikeFail = (err) => {
+const addLikeFail = (err) => {
   return {
-    type: MANAGE_LIKE_FAIL,
+    type: ADD_LIKE_FAIL,
     payload: err,
   };
 };
 
-export const manageLike = (paperId) => {
+export const addLike = (paperId) => {
   return async (dispatch) => {
     try {
-      dispatch(manageLikeRequest());
+      dispatch(addLikeRequest());
 
-      await axios.post(`/api/v1/papers/${paperId}/likes`);
-
-      dispatch(manageLikeSuccess());
+      const { data } = await axios.get(`/api/v1/papers/${paperId}/likes`);
+      dispatch(addLikeSuccess(data));
     } catch (error) {
       if (error.response) {
-        dispatch(manageLikeFail(error.response.data.message));
+        dispatch(addLikeFail(error.response.data.message));
+      } else {
+        console.log(error);
+      }
+    }
+  };
+};
+
+const removeLikeRequest = () => {
+  return {
+    type: REMOVE_LIKE_REQUEST,
+  };
+};
+
+const removeLikeSuccess = (data) => {
+  return {
+    type: REMOVE_LIKE_SUCCESS,
+    payload: data,
+  };
+};
+
+const removeLikeFail = (err) => {
+  return {
+    type: REMOVE_LIKE_FAIL,
+    payload: err,
+  };
+};
+
+export const removeLike = (paperId) => {
+  return async (dispatch) => {
+    try {
+      dispatch(removeLikeRequest());
+
+      const { data } = await axios.delete(`/api/v1/papers/${paperId}/likes`);
+
+      dispatch(removeLikeSuccess(data));
+    } catch (error) {
+      if (error.response) {
+        dispatch(removeLikeFail(error.response.message));
       } else {
         console.log(error);
       }

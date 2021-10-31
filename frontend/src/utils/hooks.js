@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { manageLike } from "../redux/actions.js/likeActions";
+import { addLike, removeLike } from "../redux/actions.js/likeActions";
+import { toast } from "react-toastify";
 
-export const useLike = (usersLike, paperId) => {
+export const useLike = (usersLike, paperId, author) => {
   const [isLiked, setIsLiked] = useState(false);
 
   const { user } = useSelector((state) => state.auth);
@@ -10,16 +11,27 @@ export const useLike = (usersLike, paperId) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (usersLike.includes(user.id)) {
+    if (usersLike.includes(user?.id)) {
       setIsLiked(true);
     } else {
       setIsLiked(false);
     }
-  }, [usersLike, user.id]);
+  }, [usersLike, user]);
 
   const handleChangeLike = (e) => {
     e.stopPropagation();
-    dispatch(manageLike(paperId));
+    if (user === null) {
+      return toast.dark("Vous devez vous conneter pour liké un article");
+    }
+    if (author._id !== user.id) {
+      if (isLiked) {
+        dispatch(removeLike(paperId));
+      } else {
+        dispatch(addLike(paperId));
+      }
+    } else {
+      toast.dark("Vous ne pouvez pas liké vos articles");
+    }
   };
   return { isLiked, handleChangeLike };
 };

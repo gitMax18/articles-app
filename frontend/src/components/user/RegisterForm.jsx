@@ -28,7 +28,10 @@ const RegisterForm = () => {
     if (isAuthenticate) {
       history.replace("/");
     }
-  }, [isAuthenticate, history]);
+    return () => {
+      dispatch(resetAuthError());
+    };
+  }, [isAuthenticate, history, dispatch]);
 
   useEffect(() => {
     dispatch(resetAuthError());

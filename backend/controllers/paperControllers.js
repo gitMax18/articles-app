@@ -111,6 +111,10 @@ exports.getPaper = catchAsyncError(async (req, res, next) => {
     },
     {
       path: "reviews",
+      populate: {
+        path: "user",
+        select: "pseudo",
+      },
     },
   ]);
 
